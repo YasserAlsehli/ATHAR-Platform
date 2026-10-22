@@ -26,16 +26,29 @@ if df[required].isna().any().any() or df['مناطق المملكة'].duplicated
 
 REGIONS = {'الرياض':'Riyadh','مكة المكرمة':'Makkah','المدينة المنورة':'Madinah','الشرقية':'Eastern Province','القصيم':'Qassim','عسير':'Asir','تبوك':'Tabuk','حائل':'Hail','الحدود الشمالية':'Northern Borders','جازان':'Jazan','نجران':'Najran','الباحة':'Al Bahah','الجوف':'Al Jawf'}
 TEXT = {
- 'ar': {'home':'الرئيسية','geo':'التحليل الجغرافي','priority':'أولويات المناطق','compare':'مقارنة المناطق','ml':'التحليل الذكي','assistant':'مساعد أثر','title':'أثر | منصة دعم القرار','subtitle':'رؤى تحليلية لتوزيع الجهات والمستفيدين في مناطق المملكة','regions':'المناطق السعودية','high':'أولوية مرتفعة','medium':'أولوية متوسطة','other':'دون فجوة سالبة','entities':'نسبة الجهات','beneficiaries':'نسبة المستفيدين','gap':'فجوة التوزيع','select':'اختر المنطقة','chart':'توزيع الجهات والمستفيدين','gapchart':'الفجوة حسب المنطقة (نقطة مئوية)','compare_select':'اختر منطقتين','download':'تنزيل البيانات المعروضة (CSV)','method':'المنهجية والقيود','ask':'اختر سؤالًا للمساعد','q1':'ما المناطق ذات الأولوية المرتفعة؟','q2':'ما أكبر فجوة سالبة؟','q3':'ما أعلى فجوة موجبة؟','q4':'ما نتائج التجميع الذكي؟','q5':'ما حدود هذه المؤشرات؟','note':'الفجوة = نسبة المستفيدين − نسبة الجهات، بوحدة النقطة المئوية. التصنيف مؤشر نسبي للمراجعة ولا يثبت نقص الخدمات.','clusters':'المجموعات الناتجة عن K-Means','ai_note':'اختيرت مجموعتان في التحليل السابق وفق Silhouette = 0.7008. هذه مجموعات إحصائية وليست قياسًا مباشرًا للاحتياج.','info':'بيانات سعودية؛ راجع ملفات المصادر والتوثيق قبل اتخاذ أي قرار.','priority_rule':'قاعدة عرض تفسيرية: مرتفعة إذا الفجوة ≤ −1، متوسطة إذا −1 < الفجوة < 0، وغير سالبة خلاف ذلك.','no_cluster':'عمود المجموعات غير متوفر في ملف النتائج.','not_chat':'هذا مساعد تحليلي قائم على أسئلة محددة وإجابات محسوبة، وليس نموذجًا لغويًا عامًا.'},
- 'en': {'home':'Home','geo':'Regional Analysis','priority':'Regional Priorities','compare':'Compare Regions','ml':'AI Analysis','assistant':'ATHAR Assistant','title':'ATHAR | Decision Intelligence','subtitle':'Evidence-based regional insights into organizations and beneficiaries in Saudi Arabia','regions':'Saudi Regions','high':'High Priority','medium':'Medium Priority','other':'No Negative Gap','entities':'Organizations Share','beneficiaries':'Beneficiaries Share','gap':'Distribution Gap','select':'Select Region','chart':'Organizations and Beneficiaries Distribution','gapchart':'Regional Gap (percentage points)','compare_select':'Select two regions','download':'Download displayed data (CSV)','method':'Methodology & Limitations','ask':'Choose a question','q1':'Which regions are high priority?','q2':'Which region has the largest negative gap?','q3':'Which region has the largest positive gap?','q4':'What are the clustering results?','q5':'What are the limitations?','note':'Gap = beneficiary share − organization share, measured in percentage points. This relative indicator does not establish unmet service needs.','clusters':'K-Means clusters','ai_note':'Two clusters were selected in earlier analysis (Silhouette = 0.7008). Statistical groups are not direct measures of service need.','info':'Saudi datasets; consult source documentation before making decisions.','priority_rule':'Interpretive display rule: high if gap ≤ −1, medium if −1 < gap < 0, otherwise no negative gap.','no_cluster':'Cluster assignment column is unavailable in the results file.','not_chat':'This is a question-based analytical assistant, not a general-purpose language model.'}
+ 'ar': {'priority_label':'تصنيف العرض','home':'الرئيسية','geo':'التحليل الجغرافي','priority':'أولويات المناطق','compare':'مقارنة المناطق','ml':'التحليل الذكي','assistant':'مساعد أثر','title':'أثر | منصة دعم القرار','subtitle':'رؤى تحليلية لتوزيع الجهات والمستفيدين في مناطق المملكة','regions':'المناطق السعودية','high':'أولوية مرتفعة','medium':'أولوية متوسطة','other':'دون فجوة سالبة','entities':'نسبة الجهات','beneficiaries':'نسبة المستفيدين','gap':'فجوة التوزيع','select':'اختر المنطقة','chart':'توزيع الجهات والمستفيدين','gapchart':'الفجوة حسب المنطقة (نقطة مئوية)','compare_select':'اختر منطقتين','download':'تنزيل البيانات المعروضة (CSV)','method':'المنهجية والقيود','ask':'اختر سؤالًا للمساعد','q1':'ما المناطق ذات الأولوية المرتفعة؟','q2':'ما أكبر فجوة سالبة؟','q3':'ما أعلى فجوة موجبة؟','q4':'ما نتائج التجميع الذكي؟','q5':'ما حدود هذه المؤشرات؟','note':'الفجوة = نسبة المستفيدين − نسبة الجهات، بوحدة النقطة المئوية. التصنيف مؤشر نسبي للمراجعة ولا يثبت نقص الخدمات.','clusters':'المجموعات الناتجة عن K-Means','ai_note':'اختيرت مجموعتان في التحليل السابق وفق Silhouette = 0.7008. هذه مجموعات إحصائية وليست قياسًا مباشرًا للاحتياج.','info':'بيانات سعودية؛ راجع ملفات المصادر والتوثيق قبل اتخاذ أي قرار.','priority_rule':'قاعدة عرض تفسيرية: مرتفعة إذا الفجوة ≤ −1، متوسطة إذا −1 < الفجوة < 0، وغير سالبة خلاف ذلك.','no_cluster':'عمود المجموعات غير متوفر في ملف النتائج.','not_chat':'هذا مساعد تحليلي قائم على أسئلة محددة وإجابات محسوبة، وليس نموذجًا لغويًا عامًا.'},
+ 'en': {'priority_label':'Display category','home':'Home','geo':'Regional Analysis','priority':'Regional Priorities','compare':'Compare Regions','ml':'AI Analysis','assistant':'ATHAR Assistant','title':'ATHAR | Decision Intelligence','subtitle':'Evidence-based regional insights into organizations and beneficiaries in Saudi Arabia','regions':'Saudi Regions','high':'High Priority','medium':'Medium Priority','other':'No Negative Gap','entities':'Organizations Share','beneficiaries':'Beneficiaries Share','gap':'Distribution Gap','select':'Select Region','chart':'Organizations and Beneficiaries Distribution','gapchart':'Regional Gap (percentage points)','compare_select':'Select two regions','download':'Download displayed data (CSV)','method':'Methodology & Limitations','ask':'Choose a question','q1':'Which regions are high priority?','q2':'Which region has the largest negative gap?','q3':'Which region has the largest positive gap?','q4':'What are the clustering results?','q5':'What are the limitations?','note':'Gap = beneficiary share − organization share, measured in percentage points. This relative indicator does not establish unmet service needs.','clusters':'K-Means clusters','ai_note':'Two clusters were selected in earlier analysis (Silhouette = 0.7008). Statistical groups are not direct measures of service need.','info':'Saudi datasets; consult source documentation before making decisions.','priority_rule':'Interpretive display rule: high if gap ≤ −1, medium if −1 < gap < 0, otherwise no negative gap.','no_cluster':'Cluster assignment column is unavailable in the results file.','not_chat':'This is a question-based analytical assistant, not a general-purpose language model.'}
 }
 with st.sidebar:
     st.markdown('## ✦ ATHAR | أثر')
     language = st.radio('Language / اللغة', ['العربية','English'], horizontal=True)
 lang = 'ar' if language == 'العربية' else 'en'
 t = TEXT[lang]
+EXTRA = {
+'ar': {'executive':'الملخص التنفيذي','story':'قصة أثر','recommendations':'التوصيات الاستراتيجية'},
+'en': {'executive':'Executive Summary','story':'ATHAR Story','recommendations':'Strategic Recommendations'}
+}
+t.update(EXTRA[lang])
 rtl = lang == 'ar'
-df['region'] = df['مناطق المملكة'].map(lambda s: s if rtl else REGIONS.get(s, s))
+def normalize_region(value):
+    import re
+    name = re.sub(r"[ـ\u064b-\u065f]", "", str(value)).strip()
+    name = re.sub(r"^المنطقة\s+", "", name)
+    name = re.sub(r"^منطقة\s+", "", name)
+    return name
+
+df['region_ar'] = df['مناطق المملكة'].map(normalize_region)
+df['region'] = df['region_ar'].map(lambda s: s if rtl else REGIONS.get(s, s))
 df['priority'] = np.select([df['فجوة التوزيع'] <= -1, df['فجوة التوزيع'] < 0], ['high','medium'], default='other')
 priority_labels = {'high':t['high'],'medium':t['medium'],'other':t['other']}
 df['priority_label'] = df['priority'].map(priority_labels)
@@ -49,7 +62,7 @@ st.markdown('''<style>
 h1,h2,h3 {color:#f1f8ff!important}
 </style>''',unsafe_allow_html=True)
 with st.sidebar:
-    pages = ['home','geo','priority','compare','ml','assistant']
+    pages = ['home','geo','priority','compare','ml','assistant','executive','story','recommendations']
     page = st.radio('Navigation / التنقل', pages, format_func=lambda x:t[x])
     st.divider()
     st.caption('ATHAR © 2026')
@@ -80,6 +93,41 @@ def table(frame):
     st.dataframe(display,use_container_width=True,hide_index=True)
     csv = display.to_csv(index=False).encode('utf-8-sig')
     st.download_button(t['download'],data=csv,file_name='ATHAR_Regional_View.csv',mime='text/csv')
+
+def interpret_gap(value):
+    if value > 0:
+        return ('حصة المستفيدين أعلى من حصة الجهات' if rtl else 'Beneficiary share exceeds organization share')
+    if value < 0:
+        return ('حصة الجهات أعلى من حصة المستفيدين' if rtl else 'Organization share exceeds beneficiary share')
+    return ('الحصتان متساويتان تقريبًا' if rtl else 'The shares are approximately equal')
+
+def region_advice(row):
+    gap = float(row['فجوة التوزيع'])
+    if gap >= 1:
+        return (('دراسة التغطية وفرص التوسع' if rtl else 'Study coverage and potential expansion'),
+                ('ارتفاع الحصة النسبية للمستفيدين مقارنة بالجهات.' if rtl else 'Beneficiary share is higher than organization share.'),
+                ('مراجعة مواقع الخدمات والطاقة الاستيعابية وقوائم الانتظار، ثم بحث التوسع أو الشراكات إذا ثبت احتياج غير ملبّى.' if rtl else 'Review service locations, capacity and waiting lists; consider expansion or partnerships only if unmet need is confirmed.'))
+    if gap > 0:
+        return (('التحقق من سهولة الوصول' if rtl else 'Assess service accessibility'),
+                ('فجوة موجبة محدودة في الحصص النسبية.' if rtl else 'A modest positive difference between regional shares.'),
+                ('فحص التغطية الفعلية ووسائل الوصول إلى الخدمات قبل اقتراح التوسع.' if rtl else 'Examine actual coverage and access before proposing expansion.'))
+    if gap <= -1:
+        return (('تحسين الاستفادة والتنسيق' if rtl else 'Improve utilization and coordination'),
+                ('حصة الجهات أعلى من حصة المستفيدين نسبيًا.' if rtl else 'Organization share is higher than beneficiary share.'),
+                ('دراسة تخصصات الجهات ومواقعها واستغلال طاقتها وإمكانات الشراكة؛ لا يُستنتج وجود فائض.' if rtl else 'Study specialization, location, utilization and partnerships; do not infer surplus.'))
+    return (('مراجعة التوازن المحلي' if rtl else 'Review local distribution'),
+            ('الحصتان متقاربتان نسبيًا.' if rtl else 'The regional shares are relatively close.'),
+            ('فحص الاختلافات داخل المنطقة والفئات المخدومة وجودة الوصول.' if rtl else 'Examine within-region differences, populations served and access quality.'))
+
+def explain_metrics():
+    with st.expander('📖 كيف نقرأ المؤشرات؟' if rtl else '📖 How to read the indicators'):
+        st.write('**نسبة الجهات:** حصة المنطقة من إجمالي الجهات المدرجة في البيانات.' if rtl else '**Organization share:** the region’s share of listed organizations.')
+        st.write('**نسبة المستفيدين:** حصة المنطقة من إجمالي المستفيدين المدرجين في البيانات.' if rtl else '**Beneficiary share:** the region’s share of listed beneficiaries.')
+        st.write('**فجوة التوزيع:** نسبة المستفيدين ناقص نسبة الجهات، بوحدة النقطة المئوية. الفجوة الموجبة ليست إثباتًا لنقص الخدمات، والسالبة ليست إثباتًا للفائض.' if rtl else '**Distribution gap:** beneficiary share minus organization share, in percentage points. Positive does not prove a service shortage; negative does not prove surplus.')
+        st.write('**K-Means:** تجميع إحصائي لمناطق متشابهة وفق المتغيرات المستخدمة، وليس تقييمًا لجودة الخدمات.' if rtl else '**K-Means:** statistical grouping by selected features, not a service quality score.')
+
+def evidence_boundary():
+    st.warning('ما تثبته البيانات: اختلاف الحصص النسبية بين المناطق. ما لا تثبته: مستوى التغطية الفعلية، جودة الخدمات، الاحتياج غير الملبّى أو جدوى إنشاء جهات جديدة.' if rtl else 'Evidence: regional differences in relative shares. Not established: actual coverage, service quality, unmet need or the case for new organizations.')
 
 if page == 'home':
     a,b,c,d = st.columns(4)
@@ -142,6 +190,55 @@ elif page == 'assistant':
         if cluster_col: st.dataframe(df.groupby(cluster_col).size().rename('Regions'),use_container_width=True)
     else: st.info(t['note']+' '+t['priority_rule'])
     st.info(t['note'])
+
+if page in ['home','geo','priority','compare','ml']:
+    explain_metrics()
+    evidence_boundary()
+
+if page == 'executive':
+    st.header('الملخص التنفيذي | دقيقة واحدة' if rtl else 'Executive summary | One minute')
+    st.write('**المشكلة:** لا تظهر الحصص الجغرافية للجهات والمستفيدين دائمًا بنمط متطابق.' if rtl else '**Problem:** Regional shares of organizations and beneficiaries do not always align.')
+    st.write('**المنهج:** مقارنة حصة كل منطقة من الجهات بحصتها من المستفيدين، مع تجميع إحصائي مساعد.' if rtl else '**Method:** Compare each region’s share of organizations and beneficiaries, supported by statistical clustering.')
+    a,b,c=st.columns(3)
+    a.metric(t['regions'],len(df))
+    arow=df.loc[df['فجوة التوزيع'].idxmax()]
+    brow=df.loc[df['فجوة التوزيع'].idxmin()]
+    b.metric(('أكبر فجوة موجبة: ' if rtl else 'Largest positive: ')+arow['region'],f"{arow['فجوة التوزيع']:+.2f} pp")
+    c.metric(('أكبر فجوة سالبة: ' if rtl else 'Largest negative: ')+brow['region'],f"{brow['فجوة التوزيع']:+.2f} pp")
+    st.write('**النتيجة:** توجد فروقات نسبية تستحق فحصًا تفصيليًا، لكنها لا تقيس كفاية الخدمات.' if rtl else '**Finding:** Relative differences warrant further investigation but do not measure service adequacy.')
+    st.write('**القرار المقترح:** إجراء تقييم احتياج وتغطية محلي قبل اعتماد توسع أو إعادة توزيع الموارد.' if rtl else '**Decision pathway:** Conduct a local needs and coverage assessment before approving expansion or resource reallocation.')
+    evidence_boundary(); explain_metrics()
+elif page == 'story':
+    st.header('قصة أثر: من السؤال إلى القرار' if rtl else 'ATHAR story: From question to decision')
+    steps = ([('1. التحدي','هل يتناسب التوزيع الجغرافي للجهات مع توزيع المستفيدين؟'),('2. البيانات','جمعنا الحصص النسبية للجهات والمستفيدين في 13 منطقة.'),('3. الاكتشاف','حسبنا الفجوة = حصة المستفيدين − حصة الجهات، وقارنا المناطق.'),('4. التفسير','الفجوة مؤشر أولي لتوجيه الدراسة، وليست دليلًا على نقص أو فائض الخدمات.'),('5. التوصية','نقترح دراسات تغطية أو تحسين استفادة أو شراكات بحسب نمط المنطقة.'),('6. القرار','نطلب بيانات السعة والمواقع والتخصصات والطلب قبل اعتماد أي تدخل.')] if rtl else [('1. Challenge','Do regional organization shares align with beneficiary shares?'),('2. Data','We compared regional shares across 13 Saudi regions.'),('3. Discovery','We calculated beneficiary share minus organization share.'),('4. Interpretation','A gap signals a topic for investigation, not proven shortage or surplus.'),('5. Recommendation','Explore coverage, utilization or partnerships according to each regional pattern.'),('6. Decision','Verify capacity, locations, specialties and demand before action.')])
+    for heading,body in steps:
+        st.subheader(heading); st.write(body)
+    evidence_boundary()
+elif page == 'recommendations':
+    st.header(t['recommendations'])
+    st.caption('توصيات استكشافية مبنية على الفجوة النسبية، وليست أوامر تنفيذية.' if rtl else 'Exploratory recommendations based on relative shares, not implementation mandates.')
+    region=st.selectbox(t['select'],df['region'].tolist(),key='recommendation_region')
+    row=df.loc[df['region']==region].iloc[0]
+    a,b,c=st.columns(3)
+    a.metric(t['entities'],f"{row['نسبة الجهات %']:.2f}%")
+    b.metric(t['beneficiaries'],f"{row['نسبة المستفيدين %']:.2f}%")
+    c.metric(t['gap'],f"{row['فجوة التوزيع']:+.2f} pp")
+    title,reason,action=region_advice(row)
+    st.subheader(title)
+    st.write(('**ماذا أظهرت البيانات؟** ' if rtl else '**What does the data show?** ')+interpret_gap(row['فجوة التوزيع'])+f" ({row['فجوة التوزيع']:+.2f} pp).")
+    st.write(('**سبب التوصية:** ' if rtl else '**Rationale:** ')+reason)
+    st.write(('**إجراء مقترح:** ' if rtl else '**Suggested action:** ')+action)
+    st.write('**البيانات المطلوبة قبل القرار:** مواقع الجهات والخدمات، التخصصات، الطاقة الاستيعابية، عدد المستفيدين الفريدين، قوائم الانتظار، سهولة الوصول، والفترة الزمنية ومصدر كل مؤشر.' if rtl else '**Data required before a decision:** Service locations, specialties, capacity, unique beneficiaries, waiting lists, accessibility, time periods and indicator sources.')
+    st.write('**القرار:** لا يُعتمد التوسع أو إعادة توزيع الموارد إلا بعد التحقق الميداني ومراجعة الجهات المعنية.' if rtl else '**Decision:** Do not approve expansion or reallocation without field validation and stakeholder review.')
+    st.subheader('جميع المناطق' if rtl else 'All regions')
+    recs=[]
+    for _,r in df.sort_values('فجوة التوزيع',ascending=False).iterrows():
+        rt,rr,ra=region_advice(r)
+        recs.append({'المنطقة' if rtl else 'Region':r['region'],'الفجوة (نقطة مئوية)' if rtl else 'Gap (pp)':round(r['فجوة التوزيع'],2),'مسار الدراسة' if rtl else 'Study pathway':rt,'الإجراء المقترح' if rtl else 'Suggested action':ra})
+    rec_df=pd.DataFrame(recs)
+    st.dataframe(rec_df,hide_index=True,use_container_width=True)
+    st.download_button(t['download'],rec_df.to_csv(index=False).encode('utf-8-sig'),file_name='ATHAR_Recommendations.csv',mime='text/csv')
+    evidence_boundary(); explain_metrics()
 
 with st.expander(t['method']):
     st.write(t['note'])
