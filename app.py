@@ -25,21 +25,6 @@ if df[required].isna().any().any() or df['مناطق المملكة'].duplicated
     st.stop()
 
 REGIONS = {'الرياض':'Riyadh','مكة المكرمة':'Makkah','المدينة المنورة':'Madinah','الشرقية':'Eastern Province','القصيم':'Qassim','عسير':'Asir','تبوك':'Tabuk','حائل':'Hail','الحدود الشمالية':'Northern Borders','جازان':'Jazan','نجران':'Najran','الباحة':'Al Bahah','الجوف':'Al Jawf'}
-REGIONS.update({
-    "الرياض": "Riyadh",
-    "مكة المكرمة": "Makkah",
-    "المدينة المنورة": "Madinah",
-    "المنطقة الشرقية": "Eastern Province",
-    "القصيم": "Qassim",
-    "عسير": "Asir",
-    "تبوك": "Tabuk",
-    "حائل": "Hail",
-    "الحدود الشمالية": "Northern Borders",
-    "جازان": "Jazan",
-    "نجران": "Najran",
-    "الباحة": "Al Bahah",
-    "الجوف": "Al Jawf"
-})
 TEXT = {
  'ar': {'home':'الرئيسية','geo':'التحليل الجغرافي','priority':'أولويات المناطق','compare':'مقارنة المناطق','ml':'التحليل الذكي','assistant':'مساعد أثر','title':'أثر | منصة دعم القرار','subtitle':'رؤى تحليلية لتوزيع الجهات والمستفيدين في مناطق المملكة','regions':'المناطق السعودية','high':'أولوية مرتفعة','medium':'أولوية متوسطة','other':'دون فجوة سالبة','entities':'نسبة الجهات','beneficiaries':'نسبة المستفيدين','gap':'فجوة التوزيع','select':'اختر المنطقة','chart':'توزيع الجهات والمستفيدين','gapchart':'الفجوة حسب المنطقة (نقطة مئوية)','compare_select':'اختر منطقتين','download':'تنزيل البيانات المعروضة (CSV)','method':'المنهجية والقيود','ask':'اختر سؤالًا للمساعد','q1':'ما المناطق ذات الأولوية المرتفعة؟','q2':'ما أكبر فجوة سالبة؟','q3':'ما أعلى فجوة موجبة؟','q4':'ما نتائج التجميع الذكي؟','q5':'ما حدود هذه المؤشرات؟','note':'الفجوة = نسبة المستفيدين − نسبة الجهات، بوحدة النقطة المئوية. التصنيف مؤشر نسبي للمراجعة ولا يثبت نقص الخدمات.','clusters':'المجموعات الناتجة عن K-Means','ai_note':'اختيرت مجموعتان في التحليل السابق وفق Silhouette = 0.7008. هذه مجموعات إحصائية وليست قياسًا مباشرًا للاحتياج.','info':'بيانات سعودية؛ راجع ملفات المصادر والتوثيق قبل اتخاذ أي قرار.','priority_rule':'قاعدة عرض تفسيرية: مرتفعة إذا الفجوة ≤ −1، متوسطة إذا −1 < الفجوة < 0، وغير سالبة خلاف ذلك.','no_cluster':'عمود المجموعات غير متوفر في ملف النتائج.','not_chat':'هذا مساعد تحليلي قائم على أسئلة محددة وإجابات محسوبة، وليس نموذجًا لغويًا عامًا.'},
  'en': {'home':'Home','geo':'Regional Analysis','priority':'Regional Priorities','compare':'Compare Regions','ml':'AI Analysis','assistant':'ATHAR Assistant','title':'ATHAR | Decision Intelligence','subtitle':'Evidence-based regional insights into organizations and beneficiaries in Saudi Arabia','regions':'Saudi Regions','high':'High Priority','medium':'Medium Priority','other':'No Negative Gap','entities':'Organizations Share','beneficiaries':'Beneficiaries Share','gap':'Distribution Gap','select':'Select Region','chart':'Organizations and Beneficiaries Distribution','gapchart':'Regional Gap (percentage points)','compare_select':'Select two regions','download':'Download displayed data (CSV)','method':'Methodology & Limitations','ask':'Choose a question','q1':'Which regions are high priority?','q2':'Which region has the largest negative gap?','q3':'Which region has the largest positive gap?','q4':'What are the clustering results?','q5':'What are the limitations?','note':'Gap = beneficiary share − organization share, measured in percentage points. This relative indicator does not establish unmet service needs.','clusters':'K-Means clusters','ai_note':'Two clusters were selected in earlier analysis (Silhouette = 0.7008). Statistical groups are not direct measures of service need.','info':'Saudi datasets; consult source documentation before making decisions.','priority_rule':'Interpretive display rule: high if gap ≤ −1, medium if −1 < gap < 0, otherwise no negative gap.','no_cluster':'Cluster assignment column is unavailable in the results file.','not_chat':'This is a question-based analytical assistant, not a general-purpose language model.'}
