@@ -225,11 +225,23 @@ elif page == 'recommendations':
     c.metric(t['gap'],f"{row['فجوة التوزيع']:+.2f} pp")
     title,reason,action=region_advice(row)
     st.subheader(title)
-    st.write(('**ماذا أظهرت البيانات؟** ' if rtl else '**What does the data show?** ')+interpret_gap(row['فجوة التوزيع'])+f" ({row['فجوة التوزيع']:+.2f} pp).")
-    st.write(('**سبب التوصية:** ' if rtl else '**Rationale:** ')+reason)
-    st.write(('**إجراء مقترح:** ' if rtl else '**Suggested action:** ')+action)
-    st.write('**البيانات المطلوبة قبل القرار:** مواقع الجهات والخدمات، التخصصات، الطاقة الاستيعابية، عدد المستفيدين الفريدين، قوائم الانتظار، سهولة الوصول، والفترة الزمنية ومصدر كل مؤشر.' if rtl else '**Data required before a decision:** Service locations, specialties, capacity, unique beneficiaries, waiting lists, accessibility, time periods and indicator sources.')
-    st.write('**القرار:** لا يُعتمد التوسع أو إعادة توزيع الموارد إلا بعد التحقق الميداني ومراجعة الجهات المعنية.' if rtl else '**Decision:** Do not approve expansion or reallocation without field validation and stakeholder review.')
+    st.caption(('مسار دراسة مقترح، وليس حكمًا على كفاية الخدمات.' if rtl else 'Suggested study pathway, not a verdict on service adequacy.'))
+    evidence = interpret_gap(row['فجوة التوزيع']) + f" ({row['فجوة التوزيع']:+.2f} pp)."
+    data_needed = ('مواقع الخدمات، تخصصاتها، الطاقة الاستيعابية، المستفيدون الفريدون، قوائم الانتظار، سهولة الوصول، وتواريخ ومصادر البيانات.' if rtl else 'Service locations, specialties, capacity, unique beneficiaries, waiting lists, accessibility, and data dates and sources.')
+    decision = ('إجراء دراسة احتياج وتحقق ميداني أولًا؛ ثم المفاضلة بين تحسين الخدمات أو الشراكات أو التوسع إذا دعمت النتائج ذلك.' if rtl else 'First validate service needs in the field; then consider improving services, partnerships, or expansion if supported by the evidence.')
+    card_items = [
+        (('🔎 1. ماذا اكتشفنا؟' if rtl else '🔎 1. What did we find?'), evidence),
+        (('💡 2. ماذا نقترح؟' if rtl else '💡 2. What do we suggest?'), reason + ' ' + action),
+        (('📋 3. ما البيانات التي نحتاجها؟' if rtl else '📋 3. What data do we need?'), data_needed),
+        (('⚖️ 4. ما القرار المناسب؟' if rtl else '⚖️ 4. What decision should be considered?'), decision),
+    ]
+    left, right = st.columns(2)
+    for i, (heading, body) in enumerate(card_items):
+        with (left if i % 2 == 0 else right):
+            with st.container(border=True):
+                st.markdown('#### ' + heading)
+                st.write(body)
+    st.info('تنبيه منهجي: الفجوة النسبية لا تثبت نقص الخدمات أو وجود فائض؛ يجب التحقق من التغطية الفعلية.' if rtl else 'Methodological note: Relative gaps do not establish service shortages or surpluses; actual coverage must be validated.')
     st.subheader('جميع المناطق' if rtl else 'All regions')
     recs=[]
     for _,r in df.sort_values('فجوة التوزيع',ascending=False).iterrows():
