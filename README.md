@@ -75,7 +75,7 @@ Cluster membership is not equivalent to regional priority and should not be inte
 
 ## Author
 
-Yasser Alsahli
+Yasser Alsehli
 
 ## Important
 
