@@ -1,0 +1,17 @@
+.stApp{background:radial-gradient(ellipse at 80% 0%,#123A4B 0,transparent 45%),#071422;color:#EAF4FA;font-family:'DejaVu Sans',Tahoma,sans-serif}
+[data-testid="stSidebar"]{background:#0B1B2B;border-inline-end:1px solid #234054}
+[data-testid="stMainBlockContainer"]{max-width:1440px;padding-top:2.2rem;padding-bottom:2rem}
+h1,h2,h3{color:#F1F8FF!important;letter-spacing:-.02em;line-height:1.5!important}
+h1{font-size:2.8rem!important}p,li{line-height:1.95} .eyebrow{font-size:.8rem;color:#68DECC;letter-spacing:.08em;margin-bottom:1.2rem}
+.hero{padding:2.4rem 2rem;margin-bottom:1.5rem;border:1px solid #2A5060;border-radius:26px;background:linear-gradient(135deg,#123344CC,#0D2037CC);position:relative;overflow:hidden}
+.hero h1{max-width:900px;margin:.9rem 0;font-size:3rem!important}.hero p{max-width:900px;color:#C3D7E5;font-size:1.15rem}.pill{display:inline-block;border:1px solid #337B7C;background:#163D46;border-radius:100px;padding:7px 15px;color:#7CE9D9;font-size:.83rem}
+.storycard{min-height:230px;padding:1.25rem;border:1px solid #254357;border-radius:18px;background:#0D2334;margin-bottom:18px}.storycard span{color:#55DCC6;font-size:1.1rem}.storycard h3{font-size:1.15rem}.storycard p{color:#BBD0DF;font-size:.93rem}
+[data-testid="stMetric"]{padding:1.1rem;background:linear-gradient(140deg,#123043,#0C2132);border:1px solid #2A4C5E;border-radius:18px;min-height:130px}
+[data-testid="stMetricValue"]{color:#61E4CF;direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums}
+[data-testid="stVerticalBlockBorderWrapper"]{border-color:#294457!important;border-radius:18px!important}
+.stButton button,.stDownloadButton button{min-height:46px;border-radius:12px;border:1px solid #355A6C;transition:background .15s ease,transform .15s ease}
+.stButton button[kind="primary"]{background:#39D7BF;color:#041C22;border-color:#39D7BF;font-weight:700}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #F5C96A!important;outline-offset:3px}
+[data-testid="stCaptionContainer"]{color:#AFC3D2}code{direction:ltr!important;unicode-bidi:isolate} [data-testid="stPlotlyChart"]{direction:ltr}
+@media(max-width:700px){h1,.hero h1{font-size:2rem!important}.hero{padding:1.5rem 1rem}.storycard{min-height:auto}.eyebrow{font-size:.7rem}[data-testid="stMainBlockContainer"]{padding:1.2rem .8rem}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
