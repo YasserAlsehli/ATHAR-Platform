@@ -24,7 +24,7 @@ st.session_state.setdefault('tour',-1)
 st.session_state.setdefault('messages',[])
 st.session_state.setdefault('request_times',[])
 
-def tr(a,b,current_lang=st.session_state.lang): return a if current_lang=='ar' else b
+def tr(a,b): return a if st.session_state.lang=='ar' else b
 
 def navigate(page):
     st.session_state.page=page
@@ -140,6 +140,17 @@ def kpis():
     for col,(name,value) in zip(st.columns(4),[(tr('مناطق التحليل','Regions'),13),(tr('مراجعة مرتفعة','High review priority'),3),(tr('مراجعة متوسطة','Medium review priority'),5),(tr('مراجعة منخفضة','Low review priority'),5)]):
         col.metric(name,value,help=tr('تصنيف مراجعة حسب القيمة المطلقة للفجوة، وليس حكمًا على جودة الخدمات.','Review classification based on absolute gap, not a service-quality assessment.'))
 
+def pdf_download(title, filename, region=None):
+    # تجهيز التصدير مستقل عن عرض النتائج
+    try:
+        from exports import make_pdf
+        pdf = make_pdf(d, ar, region)
+    except Exception:
+        st.info(tr('تعذر تجهيز PDF حاليًا؛ يمكنك متابعة قراءة النتائج في الصفحة.',
+                   'PDF export is unavailable. You can continue reading the results on this page.'))
+        return
+    st.download_button(title, pdf, filename, 'application/pdf')
+
 def decision(r):
     st.subheader(r.region)
     metrics(r)
@@ -152,14 +163,25 @@ def decision(r):
         st.write(tr('التصنيف يستخدم القيم الأصلية قبل التقريب: مرتفعة >3؛ متوسطة >1 وحتى 3؛ منخفضة ≤1. قد يظهر فرق طفيف عند طرح القيم المعروضة بمنزلتين.','Classification uses original unrounded values: high >3; medium >1 to 3; low ≤1. Subtracting two-decimal displayed values may differ slightly.'))
     st.caption(tr('مصدر النتائج: ATHAR_AI_Clusters.csv؛ الأعداد الأصلية متاحة في ATHAR_Cleaned_Data.csv. روابط المصادر وتواريخها في مركز التوثيق عند تزويدها.','Results: ATHAR_AI_Clusters.csv; counts: ATHAR_Cleaned_Data.csv. Original source links and dates appear in the documentation center when supplied.'))
     st.warning(lim)
-    try:
-        from exports import make_pdf
-        st.download_button(tr('↓ تنزيل موجز المنطقة PDF','↓ Download regional brief PDF'),make_pdf(d,ar,r.region_ar),'ATHAR_Region_Brief.pdf','application/pdf')
-    except ImportError:
-        st.info(tr('ثبّت مكتبات ملف requirements لتفعيل PDF.','Install requirements to enable PDF export.'))
+    pdf_download(tr('↓ تنزيل موجز المنطقة PDF','↓ Download regional brief PDF'),'ATHAR_Region_Brief.pdf',r.region_ar)
 
 # 5. الافتتاحية والملخص التنفيذي
 if page=='home':
+    # ضبط عرض النص والبطاقات في الرئيسية فقط
+    st.markdown("""<style>
+    .hero, .storycard {box-sizing:border-box; width:100%; max-width:100%; min-width:0;
+        height:auto!important; overflow:visible!important; white-space:normal!important;}
+    .hero {padding:clamp(1.25rem,4vw,3rem)!important;}
+    .hero h1 {font-size:clamp(2rem,4vw,3.5rem)!important; line-height:1.5!important;}
+    .hero p, .storycard p {line-height:1.9!important;}
+    .hero h1, .hero p, .hero .pill, .storycard h3, .storycard p {
+        white-space:normal!important; overflow-wrap:break-word; word-break:normal;
+        letter-spacing:normal!important; word-spacing:normal!important; max-width:100%;}
+    .hero .pill {display:inline-block; height:auto!important; line-height:1.8;}
+    [data-testid="stButton"] button {height:auto!important; min-height:2.75rem;}
+    [data-testid="stButton"] button p {white-space:normal!important;
+        word-spacing:normal!important; letter-spacing:normal!important; line-height:1.7!important;}
+    </style>""", unsafe_allow_html=True)
     st.markdown('<div class="hero"><span class="pill">'+tr('13 منطقة · سؤال واحد · قرار أوضح','13 REGIONS · ONE QUESTION · CLEARER DECISIONS')+'</span><h1>'+tr('أثر يبدأ بفهم التوزيع.','Impact starts with understanding distribution.')+'</h1><p>'+tr('أين نبدأ المراجعة؟ نقارن حصص الجهات والمستفيدين لنحدد مواضع الدراسة، ونوضح ما نحتاج معرفته قبل اتخاذ إجراء.','Where should review begin? Compare organization and beneficiary shares, identify study priorities, and see what evidence is needed before action.')+'</p></div>',unsafe_allow_html=True)
     a,b=st.columns(2)
     a.button(tr('ابدأ الاستكشاف ←','Start exploring →'),on_click=navigate,args=('geo',),type='primary',use_container_width=True)
@@ -181,8 +203,7 @@ elif page=='executive':
                 st.subheader(r.region);st.metric(tr('الفجوة','Gap'),f'{r[G]:+.2f} '+tr('ن.م.','pp'));st.write(advice(r,ar)[0])
     st.write(tr('القرار المقترح الآن: بدء التحقق التفصيلي في المناطق ذات الفجوات الأكبر. التوسع وإعادة التوزيع مشروطان بإثبات التغطية والاحتياج الفعلي.','Proposed next decision: begin detailed validation in regions with larger gaps. Expansion or reallocation depends on actual coverage and needs evidence.'))
     st.warning(lim)
-    from exports import make_pdf
-    st.download_button(tr('↓ تصدير الملخص التنفيذي PDF','↓ Export executive PDF'),make_pdf(d,ar),'ATHAR_Executive_Summary.pdf','application/pdf')
+    pdf_download(tr('↓ تصدير الملخص التنفيذي PDF','↓ Export executive PDF'),'ATHAR_Executive_Summary.pdf')
     gaps(d,True)
 
 # 6. التحليل الجغرافي والخريطة وبطاقات القرار
