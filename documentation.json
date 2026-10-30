@@ -1,0 +1,13 @@
+{
+  "platform_build_date": "2026-10-30",
+  "sources": [],
+  "notebook_url": "",
+  "report_url": "",
+  "pending_documentation": [
+    "Original source URLs and observation dates",
+    "Exact population and organization scope",
+    "Cleaning and merge steps",
+    "K-Means training features, settings and evaluation",
+    "Documented threshold rationale"
+  ]
+}
